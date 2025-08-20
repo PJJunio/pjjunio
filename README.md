@@ -18,5 +18,5 @@ Estudando Engenharia de Software na UNINTER, estabeleço bases para a minha atua
 * **Nome**: Paulo Dias
 * **Idade**: 19
 * **Localidade**: Montanha, ES - Brasil
-* **Aprendendo**: Java, PostgresSQL
+* **Aprendendo**: PHP, Symfony, Doctrine, PostgresSQL
 * **Faculdade**: Uninter
