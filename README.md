@@ -16,7 +16,7 @@ Sinta-se à vontade para explorar meus repositórios!
 Estudando Engenharia de Software na UNINTER, estabeleço bases para a minha atuação na área da tecnologia. Curto a ideia de me tornar um programador completo, pois gosto de programar na linguagem Java e experimentar com várias áreas. Na minha opinião, só o conhecimento acadêmico não é suficiente, e é por isso que experimento sempre novas coisas.
 
 * **Nome**: Paulo Dias
-* **Idade**: 19
-* **Localidade**: Montanha, ES - Brasil
-* **Aprendendo**: PHP, Symfony, Doctrine, PostgresSQL
+* **Idade**: 20
+* **Localidade**: ES - Brasil
+* **Aprendendo**: PHP, Python, FastAPI, Symfony, Doctrine, PostgresSQL
 * **Faculdade**: Uninter
