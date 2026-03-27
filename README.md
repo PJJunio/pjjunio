@@ -18,5 +18,5 @@ Estudando Engenharia de Software na UNINTER, estabeleço bases para a minha atua
 * **Nome**: Paulo Dias
 * **Idade**: 20
 * **Localidade**: ES - Brasil
-* **Aprendendo**: PHP, Python, FastAPI, Symfony, Doctrine, PostgresSQL
+* **Aprendendo**: PHP, Java, SpringBoot, Symfony, Doctrine, PostgresSQL
 * **Faculdade**: Uninter
