@@ -11,10 +11,22 @@ const { lang, translationPath } = Astro.props;
 const alternate = getAlternateLang(lang);
 ---
 
-<a
-  href={translationPath}
-  class="flex h-10 min-w-10 items-center justify-center rounded-full border border-[var(--color-border)] px-3 text-[1.3rem] font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
-  aria-label={`Switch to ${languages[alternate]}`}
+<div
+  class="inline-flex overflow-hidden rounded-full border"
+  style="border-color: var(--color-divider);"
 >
-  {languages[alternate]}
-</a>
+  <span
+    class="px-[11px] py-[5px] text-[12px]"
+    style={`color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent);`}
+  >
+    {languages[lang]}
+  </span>
+  <a
+    href={translationPath}
+    class="border-l px-[11px] py-[5px] text-[12px] transition-colors hover:text-[var(--color-accent)]"
+    style="border-color: var(--color-divider); color: color-mix(in srgb, var(--color-text) 60%, transparent);"
+    aria-label={`Switch to ${languages[alternate]}`}
+  >
+    {languages[alternate]}
+  </a>
+</div>

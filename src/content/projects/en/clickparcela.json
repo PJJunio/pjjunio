@@ -1,7 +1,7 @@
 {
   "title": "ClickParcela",
   "badge": "SaaS",
-  "description": "Installment-credit SaaS: customer management, credit limits, installment sales and collections. Payment integration with AbacatePay via webhook.",
+  "description": "Installment-credit SaaS: customer management, credit limits, deferred sales, installments and collections, with AbacatePay payment integration over webhooks.",
   "stack": ["Java 25", "Spring Boot 4", "PostgreSQL", "Docker"],
   "status": "private",
   "image": "/IMG/clickparcela.svg",
