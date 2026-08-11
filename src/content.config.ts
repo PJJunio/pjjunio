@@ -9,6 +9,7 @@ const projectSchema = z.object({
   status: z.enum(['private', 'public']),
   repoUrl: z.string().url().optional(),
   image: z.string(),
+  detailImage: z.string().optional(),
   order: z.number(),
 });
 

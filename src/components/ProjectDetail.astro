@@ -9,11 +9,13 @@ interface ProjectData {
   status: 'private' | 'public';
   repoUrl?: string;
   image: string;
+  detailImage?: string;
 }
 
 interface OtherProject {
   slug: string;
   title: string;
+  badge: string;
 }
 
 interface Props {
@@ -24,75 +26,86 @@ interface Props {
 
 const { lang, project, otherProjects } = Astro.props;
 const t = useTranslations(lang);
+
+const statusLabel = project.status === 'private' ? t('projeto.status.private') : t('projeto.status.public');
+const repoNote = project.status === 'private' ? t('projeto.note.private') : t('projeto.note.public');
+const muted = (pct: number) => `color-mix(in srgb, var(--color-text) ${pct}%, transparent)`;
+const heroImage = project.detailImage ?? project.image;
 ---
 
-<section class="mx-auto max-w-4xl px-[8%] pt-32 pb-24">
+<div style="max-width:980px;margin:0 auto;padding:56px 32px 80px;">
   <a
-    href={`${homePath(lang)}#portfolio`}
-    class="mb-8 inline-flex items-center gap-2 text-[1.4rem] text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
+    href={`${homePath(lang)}#projetos`}
+    class="btn btn-ghost"
+    style="padding-left:0;margin-bottom:40px;background:transparent;font-family:inherit;text-decoration:none;"
   >
-    <i class="bx bx-arrow-back"></i> {t('projeto.back')}
+    ← {t('projeto.back')}
   </a>
 
-  <span
-    class="mb-4 inline-block w-fit rounded-full border border-[var(--color-primary)] px-4 py-1 text-[1.1rem] font-semibold tracking-wide text-[var(--color-primary)] uppercase"
-  >
-    {project.badge}
-  </span>
-
-  <h1 class="mb-6 text-5xl font-bold text-[var(--color-text)]">{project.title}</h1>
-
-  <img
-    src={project.image}
-    alt={project.title}
-    class="mb-8 max-h-[420px] w-full rounded-2xl border border-[var(--color-border)] object-cover"
-  />
-
-  <p class="mb-8 text-[1.75rem] leading-relaxed text-[var(--color-muted)]">{project.description}</p>
-
-  <h2 class="mb-3 text-2xl font-semibold text-[var(--color-text)]">{t('projeto.stack')}</h2>
-  <div class="mb-10 flex flex-wrap gap-2">
-    {
-      project.stack.map((item) => (
-        <span class="rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-primary)]/10 px-4 py-1.5 text-[1.35rem] font-medium text-[var(--color-text)]">
-          {item}
-        </span>
-      ))
-    }
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+    <span class="tag tag-accent">{project.badge}</span>
+    <span style={`font-size:11.5px;color:${muted(48)};`}>{statusLabel}</span>
   </div>
 
-  {
-    project.status === 'public' && project.repoUrl ? (
-      <a
-        href={project.repoUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-bg)] transition-all hover:shadow-[0_0_2rem_var(--color-shadow)]"
-      >
-        <i class="bx bxl-github text-2xl" /> {t('projeto.repo')}
-      </a>
-    ) : (
-      <span class="inline-flex items-center gap-2 rounded-full border border-[var(--color-muted)]/40 px-6 py-3 text-[1.4rem] text-[var(--color-muted)]">
-        <i class="bx bx-lock" /> {t('projeto.private')}
-      </span>
-    )
-  }
+  <h1 style="font-size:clamp(34px,6vw,56px);letter-spacing:-.035em;margin:0 0 22px;">{project.title}</h1>
+  <p style={`font-size:17px;line-height:1.65;max-width:62ch;margin:0 0 34px;color:${muted(76)};`}>
+    {project.description}
+  </p>
 
-  {
-    otherProjects.length > 0 && (
-      <div class="mt-20 border-t border-[var(--color-border)] pt-10">
-        <h2 class="mb-5 text-2xl font-semibold text-[var(--color-text)]">{t('projeto.others')}</h2>
-        <div class="flex flex-wrap gap-3">
-          {otherProjects.map((p) => (
-            <a
-              href={projectPath(lang, p.slug)}
-              class="rounded-full border border-[var(--color-border)] px-5 py-2 text-[1.35rem] text-[var(--color-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-            >
-              {p.title}
-            </a>
-          ))}
-        </div>
+  <div
+    style={`position:relative;height:400px;border-radius:var(--radius-lg);overflow:hidden;background:#12141f;box-shadow:var(--shadow-sm);margin-bottom:40px;background-image:url(${heroImage});background-size:cover;background-position:center;`}
+  />
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;" class="detail-grid">
+    <div>
+      <h6 style={`color:${muted(55)};margin-bottom:14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;`}>
+        {t('projeto.stack')}
+      </h6>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        {project.stack.map((s) => (
+          <span class="tag tag-outline">{s}</span>
+        ))}
       </div>
-    )
+    </div>
+    <div>
+      <h6 style={`color:${muted(55)};margin-bottom:14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;`}>
+        {t('projeto.repoEyebrow')}
+      </h6>
+      <p style={`font-size:13.5px;line-height:1.6;color:${muted(62)};margin:0 0 14px;`}>{repoNote}</p>
+      {project.status === 'public' && project.repoUrl && (
+        <a class="btn btn-primary" href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+          {t('projeto.repo')}
+        </a>
+      )}
+    </div>
+  </div>
+
+  {otherProjects.length > 0 && (
+    <>
+      <div class="hr" />
+      <h6 style={`color:${muted(55)};margin-bottom:18px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;`}>
+        {t('projeto.others')}
+      </h6>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;">
+        {otherProjects.map((p) => (
+          <a
+            href={projectPath(lang, p.slug)}
+            style="border-radius:var(--radius-md);padding:16px;background:#1a1c29;box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;display:block;"
+          >
+            <div style="font-size:14px;margin-bottom:6px;">{p.title}</div>
+            <div style={`font-size:11.5px;color:${muted(48)};`}>{p.badge}</div>
+          </a>
+        ))}
+      </div>
+    </>
+  )}
+</div>
+
+<style>
+  @media (max-width: 640px) {
+    .detail-grid {
+      grid-template-columns: 1fr !important;
+      gap: 28px !important;
+    }
   }
-</section>
+</style>

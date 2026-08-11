@@ -1,7 +1,7 @@
 {
   "title": "PlutusGrip",
   "badge": "Open Source",
-  "description": "Personal finance management system, with a public repository on GitHub.",
+  "description": "Personal finance tracking system, public repository on GitHub.",
   "stack": ["TypeScript", "Python", "PostgreSQL", "Docker"],
   "status": "public",
   "repoUrl": "https://github.com/LeP-Projects/plutsgrip-app",

@@ -14,7 +14,7 @@ export async function getStaticPaths() {
       otherProjects: pt
         .filter((p) => p.id !== entry.id)
         .sort((a, b) => a.data.order - b.data.order)
-        .map((p) => ({ slug: p.id, title: p.data.title })),
+        .map((p) => ({ slug: p.id, title: p.data.title, badge: p.data.badge })),
     },
   }));
 }

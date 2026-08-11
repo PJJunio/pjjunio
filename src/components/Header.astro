@@ -1,5 +1,4 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
 import LangToggle from './LangToggle.astro';
 import { useTranslations, homePath, type Lang } from '../i18n/utils';
 
@@ -13,30 +12,37 @@ const t = useTranslations(lang);
 const home = homePath(lang);
 
 const navItems = [
-  { href: `${home}#inicio`, id: 'inicio', label: t('nav.inicio') },
-  { href: `${home}#sobre`, id: 'sobre', label: t('nav.sobre') },
-  { href: `${home}#habilidades`, id: 'habilidades', label: t('nav.habilidades') },
-  { href: `${home}#portfolio`, id: 'portfolio', label: t('nav.projetos') },
-  { href: `${home}#contato`, id: 'contato', label: t('nav.contato') },
+  { href: `${home}#sobre`, label: t('nav.sobre') },
+  { href: `${home}#skills`, label: t('nav.habilidades') },
+  { href: `${home}#projetos`, label: t('nav.projetos') },
+  { href: `${home}#contato`, label: t('nav.contato') },
 ];
 ---
 
 <header
-  id="site-header"
-  class="fixed top-0 left-0 z-50 w-full border-b border-transparent bg-[var(--color-bg)]/90 px-[8%] py-6 backdrop-blur transition-colors duration-300 data-[scrolled=true]:border-[var(--color-border)] data-[scrolled=true]:shadow-lg"
+  class="sticky top-0 z-50"
+  style="backdrop-filter: blur(10px); background: color-mix(in srgb, #161826 78%, transparent);"
 >
-  <div class="mx-auto flex max-w-6xl items-center justify-between">
-    <a href={home} class="text-2xl font-bold tracking-tight text-[var(--color-text)]">
-      Paulo<span class="text-[var(--color-primary)]">JR</span>
+  <div class="mx-auto flex max-w-[1180px] items-center gap-7 px-8 py-4">
+    <a href={home} class="mr-auto flex items-center gap-2.5 no-underline" style="color: var(--color-text);">
+      <span
+        class="grid h-[30px] w-[30px] place-items-center rounded-lg border text-[13px]"
+        style="border-color: var(--color-accent); color: var(--color-accent); font-family: var(--font-heading); letter-spacing: -0.02em;"
+      >
+        PJ
+      </span>
+      <span style="font-family: var(--font-heading); font-size: 15px;">
+        paulodjunior<span style="color: var(--color-accent);">.dev</span>
+      </span>
     </a>
 
-    <nav id="navbar" class="hidden items-center gap-8 md:flex">
+    <nav class="hidden gap-[22px] md:flex">
       {
         navItems.map((item) => (
           <a
             href={item.href}
-            class="nav-link text-[1.45rem] font-medium text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
-            data-section={item.id}
+            class="text-[13.5px] no-underline transition-colors hover:text-[var(--color-accent)]"
+            style="color: color-mix(in srgb, var(--color-text) 68%, transparent);"
           >
             {item.label}
           </a>
@@ -44,50 +50,57 @@ const navItems = [
       }
     </nav>
 
-    <div class="flex items-center gap-3">
-      <ThemeToggle />
+    <div class="flex items-center gap-3.5">
       <LangToggle lang={lang} translationPath={translationPath} />
+      <a class="btn btn-primary hidden text-[13px] md:inline-flex" href={`${home}#contato`}>
+        {t('nav.contratar')}
+      </a>
       <button
         id="menu-toggle"
         aria-label="Abrir menu"
-        class="text-3xl text-[var(--color-text)] md:hidden"
+        class="flex h-9 w-9 items-center justify-center md:hidden"
+        style="color: var(--color-text);"
       >
-        <i class="bx bx-menu"></i>
+        <svg id="menu-icon-open" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M2.5 5h15M2.5 10h15M2.5 15h15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
+        <svg id="menu-icon-close" width="20" height="20" viewBox="0 0 20 20" fill="none" class="hidden">
+          <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+        </svg>
       </button>
     </div>
   </div>
 
-  <nav
-    id="mobile-navbar"
-    class="hidden flex-col border-b border-[var(--color-border)] bg-[var(--color-surface)] py-4 md:hidden"
-  >
+  <div style="height:1px;background:linear-gradient(to right,transparent,var(--color-divider) 48px,var(--color-divider) calc(100% - 48px),transparent);"></div>
+
+  <nav id="mobile-navbar" class="hidden flex-col px-8 py-4 md:hidden" style="background: var(--color-surface);">
     {
       navItems.map((item) => (
         <a
           href={item.href}
-          class="border-b border-white/5 px-[6%] py-3 text-[1.6rem] text-[var(--color-muted)]"
+          class="border-b py-3 text-[14px] no-underline"
+          style="border-color: var(--color-divider); color: color-mix(in srgb, var(--color-text) 68%, transparent);"
         >
           {item.label}
         </a>
       ))
     }
+    <a class="btn btn-primary btn-block text-[13px]" href={`${home}#contato`}>
+      {t('nav.contratar')}
+    </a>
   </nav>
 </header>
 
 <script>
-  const header = document.getElementById('site-header');
   const menuToggle = document.getElementById('menu-toggle');
   const mobileNavbar = document.getElementById('mobile-navbar');
-
-  window.addEventListener('scroll', () => {
-    header?.setAttribute('data-scrolled', String(window.scrollY > 80));
-  });
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
 
   menuToggle?.addEventListener('click', () => {
     mobileNavbar?.classList.toggle('hidden');
     mobileNavbar?.classList.toggle('flex');
-    const icon = menuToggle.querySelector('i');
-    icon?.classList.toggle('bx-menu');
-    icon?.classList.toggle('bx-x');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
   });
 </script>

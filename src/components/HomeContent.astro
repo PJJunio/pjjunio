@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BentoGrid from './BentoGrid.astro';
 import { useTranslations, type Lang } from '../i18n/utils';
+import { getFacts, getAboutRows, getSkillGroups } from '../i18n/content';
 
 interface Props {
   lang: Lang;
@@ -12,128 +13,102 @@ const t = useTranslations(lang);
 
 const projects = lang === 'pt' ? await getCollection('projects-pt') : await getCollection('projects-en');
 
-const skillCategories = [
-  { icon: 'bx-code-alt', key: 'habilidades.linguagens', tags: ['Java', 'PHP'] },
-  {
-    icon: 'bx-layer',
-    key: 'habilidades.frameworks',
-    tags: ['Spring Boot', 'Spring Security', 'Symfony', 'Doctrine ORM', 'JPA / Hibernate'],
-  },
-  { icon: 'bx-data', key: 'habilidades.banco', tags: ['PostgreSQL', 'MySQL', 'Redis', 'H2'] },
-  { icon: 'bx-server', key: 'habilidades.devops', tags: ['Docker', 'Flyway', 'Maven', 'Composer', 'CI/CD'] },
-  {
-    icon: 'bx-wrench',
-    key: 'habilidades.ferramentas',
-    tags: ['Git', 'SonarQube', 'Spring Actuator', 'MapStruct', 'Lombok', 'Cloudinary'],
-  },
-  { icon: 'bx-lock-alt', key: 'habilidades.seguranca', tags: ['JWT', 'MFA', 'RBAC', 'Spring Security'] },
-] as const;
+const facts = getFacts(lang);
+const aboutRows = getAboutRows(lang);
+const skillGroups = getSkillGroups(lang);
+
+const muted = 'color-mix(in srgb, var(--color-text) 68%, transparent)';
 ---
 
-<section id="inicio" class="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center gap-16 px-[8%] pt-32 md:flex-row md:justify-between">
-  <div class="max-w-2xl text-center md:text-left">
-    <h3 class="text-2xl font-normal text-[var(--color-muted)]">{t('hero.greeting')}</h3>
-    <h1 class="my-2 text-6xl leading-tight font-bold text-[var(--color-text)]">{t('hero.name')}</h1>
-    <h4 class="mb-8 text-3xl font-medium text-[var(--color-muted)]">
-      {t('hero.role.prefix')} <span class="text-[var(--color-primary)]">{t('hero.role.highlight')}</span>
-    </h4>
-    <p class="mb-10 text-lg leading-relaxed text-[var(--color-muted)]">
-      {t('hero.stack')}<br />
-      {t('hero.description')}
-    </p>
-    <div class="mb-2 flex justify-center gap-4 md:justify-start">
-      <a
-        href="https://github.com/PJJunio"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="GitHub"
-        class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-xl text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
-      >
-        <i class="bx bxl-github"></i>
-      </a>
-      <a
-        href="https://www.linkedin.com/in/pjjunio/"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="LinkedIn"
-        class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-xl text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
-      >
-        <i class="bx bxl-linkedin"></i>
-      </a>
-      <a
-        href="https://wa.me/5527998584983"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="WhatsApp"
-        class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-xl text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
-      >
-        <i class="bx bxl-whatsapp"></i>
-      </a>
-    </div>
-    <a
-      href="/curriculo_paulo.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="mt-8 inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-bg)] transition-all hover:shadow-[0_0_2rem_var(--color-shadow)]"
-    >
-      <i class="bx bx-download"></i> {t('hero.cta')}
-    </a>
-  </div>
-  <div class="flex-shrink-0">
-    <img
-      src="/IMG/fotoperfil.svg"
-      alt={t('hero.name')}
-      class="w-[60vw] max-w-[380px] animate-[floatImage_4s_ease-in-out_infinite] rounded-full border-2 border-[var(--color-border)] shadow-[0_0_4rem_var(--color-shadow)] md:w-[34vw]"
-    />
-  </div>
-</section>
-
-<section id="sobre" class="bg-[var(--color-surface)] px-[8%] py-24">
-  <div class="mx-auto flex max-w-6xl flex-col items-center gap-16 md:flex-row-reverse md:justify-between">
-    <div class="flex-shrink-0">
-      <img
-        src="/IMG/fotoperfil.svg"
-        alt={t('sobre.eyebrow')}
-        class="w-[60vw] max-w-[360px] rounded-3xl border-2 border-[var(--color-border)] shadow-[0_0_3rem_var(--color-shadow)] md:w-[34vw]"
-      />
-    </div>
-    <div class="max-w-xl text-center md:text-left">
-      <h3 class="text-lg tracking-[0.25rem] text-[var(--color-muted)] uppercase">{t('sobre.eyebrow')}</h3>
-      <h1 class="mt-2 mb-6 text-4xl font-bold text-[var(--color-text)]">
-        {t('sobre.title.prefix')} <span class="text-[var(--color-primary)]">{t('sobre.title.highlight')}</span>
+<section id="top" style="max-width:1180px;margin:0 auto;padding:80px 32px 64px;">
+  <div style="display:flex;gap:56px;align-items:center;flex-wrap:wrap-reverse;">
+    <div style="flex:1 1 480px;min-width:0;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px;">
+        <span style="width:56px;height:3px;background:var(--color-accent);border-radius:2px;"></span>
+        <span
+          style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 60%, transparent);"
+        >
+          {t('hero.kicker')}
+        </span>
+      </div>
+      <h1 style="font-size:clamp(38px,5.5vw,66px);line-height:.98;letter-spacing:-.035em;max-width:16ch;margin:0 0 28px;">
+        {t('hero.line1')} <span style="color:var(--color-accent);">{t('hero.line2')}</span>
       </h1>
-      <p class="mb-4 text-[1.55rem] leading-relaxed text-[var(--color-muted)]">{t('sobre.p1')}</p>
-      <p class="mb-4 text-[1.55rem] leading-relaxed text-[var(--color-muted)]">{t('sobre.p2')}</p>
-      <ul class="mt-2 space-y-2 text-left">
-        {
-          (['sobre.list.1', 'sobre.list.2', 'sobre.list.3', 'sobre.list.4', 'sobre.list.5', 'sobre.list.6'] as const).map(
-            (key) => (
-              <li class="relative pl-6 text-[1.5rem] text-[var(--color-muted)] before:absolute before:left-0 before:font-bold before:text-[var(--color-primary)] before:content-['▹']">
-                {t(key)}
-              </li>
-            ),
-          )
-        }
-      </ul>
+      <p style={`font-size:17px;line-height:1.6;max-width:58ch;color:${muted};margin:0 0 34px;`}>{t('hero.desc')}</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:44px;">
+        <a class="btn btn-primary" href="/curriculo_paulo.pdf" target="_blank" rel="noopener noreferrer">
+          {t('hero.ctaResume')}
+        </a>
+        <a class="btn btn-secondary" href="#projetos">{t('hero.ctaProjects')}</a>
+        <span style={`display:flex;align-items:center;gap:8px;margin-left:6px;font-size:12.5px;color:${muted};`}>
+          <span style="width:7px;height:7px;border-radius:50%;background:#7ec9a0;animation:pj-pulse 2.4s ease-in-out infinite;"
+          ></span>{t('hero.availability')}
+        </span>
+      </div>
+    </div>
+
+    <div style="flex:0 0 auto;width:min(280px,42vw);">
+      <div class="elev-sm" style="border-radius:var(--radius-lg);overflow:hidden;aspect-ratio:3/4;background:#12141f;">
+        <img
+          src="/IMG/fotoperfil.svg"
+          alt={t('hero.photoAlt')}
+          style="width:100%;height:100%;object-fit:cover;object-position:top center;"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--color-divider);border-radius:var(--radius-md);overflow:hidden;margin-top:8px;">
+    {
+      facts.map((f) => (
+        <div style="background:#191b2a;padding:18px 20px;">
+          <div style="font-family:var(--font-heading);font-size:26px;letter-spacing:-.02em;color:var(--color-accent-300);">{f.value}</div>
+          <div style={`font-size:11.5px;margin-top:4px;color:${muted};`}>{f.label}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section id="sobre" style="max-width:1180px;margin:0 auto;padding:64px 32px;">
+  <h6 style="color:var(--color-accent);margin-bottom:14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;">
+    {t('about.eyebrow')}
+  </h6>
+  <div style="display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start;" class="about-grid">
+    <div>
+      <h2 style="font-size:36px;letter-spacing:-.03em;max-width:22ch;margin-bottom:22px;">{t('about.title')}</h2>
+      <p style={`font-size:15.5px;line-height:1.7;color:${muted};margin:0 0 16px;`}>{t('about.p1')}</p>
+      <p style={`font-size:15.5px;line-height:1.7;color:${muted};margin:0;`}>{t('about.p2')}</p>
+    </div>
+    <div style="display:flex;flex-direction:column;">
+      {
+        aboutRows.map((row) => (
+          <div style="display:flex;gap:14px;padding:13px 0;border-bottom:1px solid color-mix(in srgb, var(--color-text) 8%, transparent);">
+            <span style="font-size:11px;font-variant-numeric:tabular-nums;color:var(--color-accent-600);padding-top:3px;">{row.n}</span>
+            <span style="font-size:14px;line-height:1.5;">{row.text}</span>
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>
 
-<section id="habilidades" class="px-[8%] py-24">
-  <h2 class="mb-16 text-center text-5xl font-bold text-[var(--color-text)]">
-    {t('habilidades.title.prefix')} <span class="text-[var(--color-primary)]">{t('habilidades.title.highlight')}</span>
-  </h2>
-  <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<section id="skills" style="max-width:1180px;margin:0 auto;padding:64px 32px;">
+  <h6 style="color:var(--color-accent);margin-bottom:14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;">
+    {t('skills.eyebrow')}
+  </h6>
+  <h2 style="font-size:36px;letter-spacing:-.03em;margin-bottom:38px;">{t('skills.title')}</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;">
     {
-      skillCategories.map((cat) => (
-        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-lg">
-          <h3 class="mb-4 flex items-center gap-2 text-[1.55rem] font-semibold text-[var(--color-primary)]">
-            <i class={`bx ${cat.icon} text-2xl`} /> {t(cat.key as any)}
-          </h3>
-          <div class="flex flex-wrap gap-2">
-            {cat.tags.map((tag) => (
-              <span class="rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-primary)]/10 px-3 py-1 text-[1.3rem] font-medium text-[var(--color-text)]">
-                {tag}
+      skillGroups.map((g) => (
+        <div class="card elev-sm" style="background:#1c1e2c;padding:20px;gap:14px;">
+          <div style={`font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 55%, transparent);`}>
+            {g.label}
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            {g.items.map((item) => (
+              <span class="tag tag-neutral" style="background:#282b3b;">
+                {item}
               </span>
             ))}
           </div>
@@ -143,54 +118,54 @@ const skillCategories = [
   </div>
 </section>
 
-<section id="portfolio" class="bg-[var(--color-surface)] px-[8%] py-24">
-  <h2 class="mb-16 text-center text-5xl font-bold text-[var(--color-text)]">
-    {t('projetos.title.prefix')} <span class="text-[var(--color-primary)]">{t('projetos.title.highlight')}</span>
-  </h2>
-  <div class="mx-auto max-w-6xl">
-    <BentoGrid lang={lang} projects={projects} />
+<section id="projetos" style="max-width:1180px;margin:0 auto;padding:64px 32px;">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:34px;flex-wrap:wrap;">
+    <div>
+      <h6 style="color:var(--color-accent);margin-bottom:14px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;">
+        {t('projects.eyebrow')}
+      </h6>
+      <h2 style="font-size:36px;letter-spacing:-.03em;margin:0;">{t('projects.title')}</h2>
+    </div>
+    <p style={`font-size:13.5px;max-width:38ch;margin:0;color:color-mix(in srgb, var(--color-text) 58%, transparent);`}>
+      {t('projects.note')}
+    </p>
   </div>
+
+  <BentoGrid lang={lang} projects={projects} />
 </section>
 
-<section id="contato" class="flex flex-col items-center px-[8%] py-24 text-center">
-  <h2 class="mb-8 text-5xl font-bold text-[var(--color-text)]">
-    {t('contato.title.prefix')} <span class="text-[var(--color-primary)]">{t('contato.title.highlight')}</span>
-  </h2>
-  <p class="mb-12 max-w-2xl text-[1.75rem] leading-relaxed text-[var(--color-muted)]">{t('contato.description')}</p>
-  <div class="flex flex-wrap justify-center gap-6">
-    <a
-      href="https://wa.me/5527998584983"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-bg)] transition-all hover:shadow-[0_0_2rem_var(--color-shadow)]"
-    >
-      <i class="bx bxl-whatsapp text-2xl"></i> {t('contato.whatsapp')}
-    </a>
-    <a
-      href="mailto:contato@paulodjunior.dev"
-      class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
-    >
-      <i class="bx bx-envelope text-2xl"></i> {t('contato.email')}
-    </a>
-    <a
-      href="https://www.linkedin.com/in/pjjunio/"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
-    >
-      <i class="bx bxl-linkedin text-2xl"></i> {t('contato.linkedin')}
-    </a>
+<section id="contato" style="max-width:1180px;margin:0 auto;padding:80px 32px 40px;">
+  <div style="border-radius:var(--radius-lg);padding:52px 48px;background:linear-gradient(135deg,#262a60 0%,#1d2044 55%,#191b2c 100%);box-shadow:var(--shadow-md);">
+    <h2 style="font-size:42px;letter-spacing:-.035em;max-width:20ch;margin:0 0 18px;">{t('contact.title')}</h2>
+    <p style={`font-size:15.5px;line-height:1.65;max-width:56ch;margin:0 0 32px;color:color-mix(in srgb, var(--color-text) 78%, transparent);`}>
+      {t('contact.desc')}
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <a
+        class="btn btn-primary"
+        href="https://wa.me/5527998584983"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="background:color-mix(in srgb, var(--color-accent) 14%, transparent);"
+      >
+        WhatsApp
+      </a>
+      <a class="btn btn-secondary" href="mailto:paulodjunior.dev@gmail.com">paulodjunior.dev@gmail.com</a>
+      <a class="btn btn-secondary" href="https://www.linkedin.com/in/pjjunio" target="_blank" rel="noopener noreferrer">
+        LinkedIn
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/PJJunio" target="_blank" rel="noopener noreferrer">
+        GitHub
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
-  @keyframes floatImage {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-2rem);
+  @media (max-width: 800px) {
+    .about-grid {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
     }
   }
 </style>
