@@ -1,0 +1,93 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+import { useTranslations, homePath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  translationPath: string;
+}
+
+const { lang, translationPath } = Astro.props;
+const t = useTranslations(lang);
+const home = homePath(lang);
+
+const navItems = [
+  { href: `${home}#inicio`, id: 'inicio', label: t('nav.inicio') },
+  { href: `${home}#sobre`, id: 'sobre', label: t('nav.sobre') },
+  { href: `${home}#habilidades`, id: 'habilidades', label: t('nav.habilidades') },
+  { href: `${home}#portfolio`, id: 'portfolio', label: t('nav.projetos') },
+  { href: `${home}#contato`, id: 'contato', label: t('nav.contato') },
+];
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 z-50 w-full border-b border-transparent bg-[var(--color-bg)]/90 px-[8%] py-6 backdrop-blur transition-colors duration-300 data-[scrolled=true]:border-[var(--color-border)] data-[scrolled=true]:shadow-lg"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between">
+    <a href={home} class="text-2xl font-bold tracking-tight text-[var(--color-text)]">
+      Paulo<span class="text-[var(--color-primary)]">JR</span>
+    </a>
+
+    <nav id="navbar" class="hidden items-center gap-8 md:flex">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="nav-link text-[1.45rem] font-medium text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
+            data-section={item.id}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <ThemeToggle />
+      <LangToggle lang={lang} translationPath={translationPath} />
+      <button
+        id="menu-toggle"
+        aria-label="Abrir menu"
+        class="text-3xl text-[var(--color-text)] md:hidden"
+      >
+        <i class="bx bx-menu"></i>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-navbar"
+    class="hidden flex-col border-b border-[var(--color-border)] bg-[var(--color-surface)] py-4 md:hidden"
+  >
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="border-b border-white/5 px-[6%] py-3 text-[1.6rem] text-[var(--color-muted)]"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileNavbar = document.getElementById('mobile-navbar');
+
+  window.addEventListener('scroll', () => {
+    header?.setAttribute('data-scrolled', String(window.scrollY > 80));
+  });
+
+  menuToggle?.addEventListener('click', () => {
+    mobileNavbar?.classList.toggle('hidden');
+    mobileNavbar?.classList.toggle('flex');
+    const icon = menuToggle.querySelector('i');
+    icon?.classList.toggle('bx-menu');
+    icon?.classList.toggle('bx-x');
+  });
+</script>

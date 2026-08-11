@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectDetail from '../../components/ProjectDetail.astro';
+import { validateProjectTranslations } from '../../utils/validateContent';
+import { projectPath } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+  const { pt } = await validateProjectTranslations();
+
+  return pt.map((entry) => ({
+    params: { slug: entry.id },
+    props: {
+      project: entry.data,
+      otherProjects: pt
+        .filter((p) => p.id !== entry.id)
+        .sort((a, b) => a.data.order - b.data.order)
+        .map((p) => ({ slug: p.id, title: p.data.title })),
+    },
+  }));
+}
+
+const { slug } = Astro.params;
+const { project, otherProjects } = Astro.props;
+---
+
+<BaseLayout
+  lang="pt"
+  translationPath={projectPath('en', slug!)}
+  title={`${project.title} | Paulo Dias`}
+  description={project.description}
+>
+  <ProjectDetail lang="pt" project={project} otherProjects={otherProjects} />
+</BaseLayout>

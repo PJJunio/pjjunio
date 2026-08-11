@@ -1,0 +1,20 @@
+---
+import { languages } from '../i18n/ui';
+import { getAlternateLang, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  translationPath: string;
+}
+
+const { lang, translationPath } = Astro.props;
+const alternate = getAlternateLang(lang);
+---
+
+<a
+  href={translationPath}
+  class="flex h-10 min-w-10 items-center justify-center rounded-full border border-[var(--color-border)] px-3 text-[1.3rem] font-semibold text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
+  aria-label={`Switch to ${languages[alternate]}`}
+>
+  {languages[alternate]}
+</a>

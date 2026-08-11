@@ -1,0 +1,9 @@
+{
+  "title": "ClickParcela",
+  "badge": "SaaS",
+  "description": "SaaS de crediário: gestão de clientes, limite de crédito, vendas a prazo, parcelas e cobranças. Integração de pagamentos com AbacatePay via webhook.",
+  "stack": ["Java 25", "Spring Boot 4", "PostgreSQL", "Docker"],
+  "status": "private",
+  "image": "/IMG/clickparcela.svg",
+  "order": 2
+}

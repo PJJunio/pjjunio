@@ -1,0 +1,52 @@
+---
+import { useTranslations, projectPath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  slug: string;
+  title: string;
+  badge: string;
+  description: string;
+  stack: string[];
+  status: 'private' | 'public';
+  image: string;
+  large?: boolean;
+}
+
+const { lang, slug, title, badge, description, stack, status, image, large = false } = Astro.props;
+const t = useTranslations(lang);
+const href = projectPath(lang, slug);
+---
+
+<a
+  href={href}
+  class:list={[
+    'group relative flex flex-col justify-end overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-xl',
+    large ? 'min-h-[320px]' : 'min-h-[220px]',
+  ]}
+  style={`background-image: linear-gradient(to top, var(--color-surface) 30%, transparent), url(${image}); background-size: cover; background-position: center;`}
+>
+  <span
+    class="mb-3 w-fit rounded-full border border-[var(--color-primary)] px-3 py-1 text-[1.05rem] font-semibold tracking-wide text-[var(--color-primary)] uppercase"
+  >
+    {badge}
+  </span>
+  <h3 class="mb-2 text-2xl font-bold text-[var(--color-text)]">{title}</h3>
+  <p class="mb-3 text-[1.35rem] leading-relaxed text-[var(--color-muted)]">{description}</p>
+  <div class="flex flex-wrap gap-2">
+    {
+      stack.slice(0, 4).map((item) => (
+        <span class="rounded-full border border-[var(--color-border)] bg-[var(--color-bg)]/60 px-3 py-1 text-[1.15rem] text-[var(--color-text)]">
+          {item}
+        </span>
+      ))
+    }
+  </div>
+  {
+    status === 'private' && (
+      <span class="mt-3 inline-flex w-fit items-center gap-1 rounded-full border border-[var(--color-muted)]/40 px-3 py-1 text-[1.1rem] text-[var(--color-muted)]">
+        <i class="bx bx-lock" /> {t('projetos.status.private')}
+      </span>
+    )
+  }
+</a>

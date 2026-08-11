@@ -1,0 +1,9 @@
+{
+  "title": "Autêntica Importados",
+  "badge": "E-commerce",
+  "description": "Backend de e-commerce com catálogo, pedidos, promoções, controle de estoque e acesso por perfis (MASTER / AFFILIATE / CUSTOMER).",
+  "stack": ["Java 21", "Spring Boot 3.2", "PostgreSQL 16", "Cloudinary"],
+  "status": "private",
+  "image": "/IMG/autentica-imports.svg",
+  "order": 3
+}
