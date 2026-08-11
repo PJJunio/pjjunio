@@ -1,0 +1,10 @@
+{
+  "title": "PDV ModernoMS",
+  "badge": "Academic",
+  "description": "Modular point-of-sale system with cash register, inventory, real-time dashboard and alerts. MVC architecture with a service layer.",
+  "stack": ["PHP 8.2", "Symfony 7.3", "MySQL 8", "Docker"],
+  "status": "public",
+  "repoUrl": "https://github.com/PJJunio/piDV",
+  "image": "/IMG/mscode.png",
+  "order": 4
+}

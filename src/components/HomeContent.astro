@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import BentoGrid from './BentoGrid.astro';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const projects = lang === 'pt' ? await getCollection('projects-pt') : await getCollection('projects-en');
+
+const skillCategories = [
+  { icon: 'bx-code-alt', key: 'habilidades.linguagens', tags: ['Java', 'PHP'] },
+  {
+    icon: 'bx-layer',
+    key: 'habilidades.frameworks',
+    tags: ['Spring Boot', 'Spring Security', 'Symfony', 'Doctrine ORM', 'JPA / Hibernate'],
+  },
+  { icon: 'bx-data', key: 'habilidades.banco', tags: ['PostgreSQL', 'MySQL', 'Redis', 'H2'] },
+  { icon: 'bx-server', key: 'habilidades.devops', tags: ['Docker', 'Flyway', 'Maven', 'Composer', 'CI/CD'] },
+  {
+    icon: 'bx-wrench',
+    key: 'habilidades.ferramentas',
+    tags: ['Git', 'SonarQube', 'Spring Actuator', 'MapStruct', 'Lombok', 'Cloudinary'],
+  },
+  { icon: 'bx-lock-alt', key: 'habilidades.seguranca', tags: ['JWT', 'MFA', 'RBAC', 'Spring Security'] },
+] as const;
+---
+
+<section id="inicio" class="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center gap-16 px-[8%] pt-32 md:flex-row md:justify-between">
+  <div class="max-w-2xl text-center md:text-left">
+    <h3 class="text-2xl font-normal text-[var(--color-muted)]">{t('hero.greeting')}</h3>
+    <h1 class="my-2 text-6xl leading-tight font-bold text-[var(--color-text)]">{t('hero.name')}</h1>
+    <h4 class="mb-8 text-3xl font-medium text-[var(--color-muted)]">
+      {t('hero.role.prefix')} <span class="text-[var(--color-primary)]">{t('hero.role.highlight')}</span>
+    </h4>
+    <p class="mb-10 text-lg leading-relaxed text-[var(--color-muted)]">
+      {t('hero.stack')}<br />
+      {t('hero.description')}
+    </p>
+    <div class="mb-2 flex justify-center gap-4 md:justify-start">
+      <a
+        href="https://github.com/PJJunio"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="GitHub"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-xl text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
+      >
+        <i class="bx bxl-github"></i>
+      </a>
+      <a
+        href="https://www.linkedin.com/in/pjjunio/"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="LinkedIn"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-xl text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
+      >
+        <i class="bx bxl-linkedin"></i>
+      </a>
+      <a
+        href="https://wa.me/5527998584983"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="WhatsApp"
+        class="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-xl text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
+      >
+        <i class="bx bxl-whatsapp"></i>
+      </a>
+    </div>
+    <a
+      href="/curriculo_paulo.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-8 inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-bg)] transition-all hover:shadow-[0_0_2rem_var(--color-shadow)]"
+    >
+      <i class="bx bx-download"></i> {t('hero.cta')}
+    </a>
+  </div>
+  <div class="flex-shrink-0">
+    <img
+      src="/IMG/fotoperfil.svg"
+      alt={t('hero.name')}
+      class="w-[60vw] max-w-[380px] animate-[floatImage_4s_ease-in-out_infinite] rounded-full border-2 border-[var(--color-border)] shadow-[0_0_4rem_var(--color-shadow)] md:w-[34vw]"
+    />
+  </div>
+</section>
+
+<section id="sobre" class="bg-[var(--color-surface)] px-[8%] py-24">
+  <div class="mx-auto flex max-w-6xl flex-col items-center gap-16 md:flex-row-reverse md:justify-between">
+    <div class="flex-shrink-0">
+      <img
+        src="/IMG/fotoperfil.svg"
+        alt={t('sobre.eyebrow')}
+        class="w-[60vw] max-w-[360px] rounded-3xl border-2 border-[var(--color-border)] shadow-[0_0_3rem_var(--color-shadow)] md:w-[34vw]"
+      />
+    </div>
+    <div class="max-w-xl text-center md:text-left">
+      <h3 class="text-lg tracking-[0.25rem] text-[var(--color-muted)] uppercase">{t('sobre.eyebrow')}</h3>
+      <h1 class="mt-2 mb-6 text-4xl font-bold text-[var(--color-text)]">
+        {t('sobre.title.prefix')} <span class="text-[var(--color-primary)]">{t('sobre.title.highlight')}</span>
+      </h1>
+      <p class="mb-4 text-[1.55rem] leading-relaxed text-[var(--color-muted)]">{t('sobre.p1')}</p>
+      <p class="mb-4 text-[1.55rem] leading-relaxed text-[var(--color-muted)]">{t('sobre.p2')}</p>
+      <ul class="mt-2 space-y-2 text-left">
+        {
+          (['sobre.list.1', 'sobre.list.2', 'sobre.list.3', 'sobre.list.4', 'sobre.list.5', 'sobre.list.6'] as const).map(
+            (key) => (
+              <li class="relative pl-6 text-[1.5rem] text-[var(--color-muted)] before:absolute before:left-0 before:font-bold before:text-[var(--color-primary)] before:content-['▹']">
+                {t(key)}
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="habilidades" class="px-[8%] py-24">
+  <h2 class="mb-16 text-center text-5xl font-bold text-[var(--color-text)]">
+    {t('habilidades.title.prefix')} <span class="text-[var(--color-primary)]">{t('habilidades.title.highlight')}</span>
+  </h2>
+  <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      skillCategories.map((cat) => (
+        <div class="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all hover:-translate-y-1 hover:border-[var(--color-primary)] hover:shadow-lg">
+          <h3 class="mb-4 flex items-center gap-2 text-[1.55rem] font-semibold text-[var(--color-primary)]">
+            <i class={`bx ${cat.icon} text-2xl`} /> {t(cat.key as any)}
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            {cat.tags.map((tag) => (
+              <span class="rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-primary)]/10 px-3 py-1 text-[1.3rem] font-medium text-[var(--color-text)]">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<section id="portfolio" class="bg-[var(--color-surface)] px-[8%] py-24">
+  <h2 class="mb-16 text-center text-5xl font-bold text-[var(--color-text)]">
+    {t('projetos.title.prefix')} <span class="text-[var(--color-primary)]">{t('projetos.title.highlight')}</span>
+  </h2>
+  <div class="mx-auto max-w-6xl">
+    <BentoGrid lang={lang} projects={projects} />
+  </div>
+</section>
+
+<section id="contato" class="flex flex-col items-center px-[8%] py-24 text-center">
+  <h2 class="mb-8 text-5xl font-bold text-[var(--color-text)]">
+    {t('contato.title.prefix')} <span class="text-[var(--color-primary)]">{t('contato.title.highlight')}</span>
+  </h2>
+  <p class="mb-12 max-w-2xl text-[1.75rem] leading-relaxed text-[var(--color-muted)]">{t('contato.description')}</p>
+  <div class="flex flex-wrap justify-center gap-6">
+    <a
+      href="https://wa.me/5527998584983"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-bg)] transition-all hover:shadow-[0_0_2rem_var(--color-shadow)]"
+    >
+      <i class="bx bxl-whatsapp text-2xl"></i> {t('contato.whatsapp')}
+    </a>
+    <a
+      href="mailto:contato@paulodjunior.dev"
+      class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
+    >
+      <i class="bx bx-envelope text-2xl"></i> {t('contato.email')}
+    </a>
+    <a
+      href="https://www.linkedin.com/in/pjjunio/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)] hover:text-[var(--color-bg)]"
+    >
+      <i class="bx bxl-linkedin text-2xl"></i> {t('contato.linkedin')}
+    </a>
+  </div>
+</section>
+
+<style>
+  @keyframes floatImage {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2rem);
+    }
+  }
+</style>

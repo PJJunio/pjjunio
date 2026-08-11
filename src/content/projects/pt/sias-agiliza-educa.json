@@ -1,0 +1,9 @@
+{
+  "title": "SIAS – Agiliza Educa",
+  "badge": "Em produção",
+  "description": "Sistema educacional com mais de 25 módulos: alunos, matrículas, frequência, notas, folha de pagamento, biblioteca e mais. Autenticação com JWT, MFA e controle de acesso por perfis (RBAC). Pipeline de CI/CD com análise de qualidade via SonarQube.",
+  "stack": ["Java 25", "Spring Boot 4", "PostgreSQL 17", "Redis", "Docker", "JWT", "MFA", "RBAC", "SonarQube"],
+  "status": "private",
+  "image": "/IMG/agiliza.jpg",
+  "order": 1
+}

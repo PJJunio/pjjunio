@@ -1,0 +1,10 @@
+{
+  "title": "PDV ModernoMS",
+  "badge": "Acadêmico",
+  "description": "Ponto de Venda modular com controle de caixa, estoque, dashboard e alertas em tempo real. Arquitetura MVC com camada de serviço (Service Layer).",
+  "stack": ["PHP 8.2", "Symfony 7.3", "MySQL 8", "Docker"],
+  "status": "public",
+  "repoUrl": "https://github.com/PJJunio/piDV",
+  "image": "/IMG/mscode.png",
+  "order": 4
+}

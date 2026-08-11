@@ -1,0 +1,24 @@
+---
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<footer class="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-[8%] py-8 text-center">
+  <p class="text-[1.4rem] text-[var(--color-muted)]">
+    {t('footer.made')} <span class="text-[var(--color-text)]">Paulo Junior</span> &copy; 2026 &mdash;
+    <a
+      href="https://github.com/PJJunio"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-[var(--color-primary)] transition-opacity hover:opacity-75"
+    >
+      GitHub
+    </a>
+  </p>
+</footer>

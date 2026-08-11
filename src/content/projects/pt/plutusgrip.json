@@ -1,0 +1,10 @@
+{
+  "title": "PlutusGrip",
+  "badge": "Open Source",
+  "description": "Sistema de controle financeiro pessoal, com repositório público no GitHub.",
+  "stack": ["TypeScript", "Python", "PostgreSQL", "Docker"],
+  "status": "public",
+  "repoUrl": "https://github.com/LeP-Projects/plutsgrip-app",
+  "image": "/IMG/plutus.png",
+  "order": 5
+}

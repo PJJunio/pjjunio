@@ -1,0 +1,98 @@
+---
+import { useTranslations, homePath, projectPath, type Lang } from '../i18n/utils';
+
+interface ProjectData {
+  title: string;
+  badge: string;
+  description: string;
+  stack: string[];
+  status: 'private' | 'public';
+  repoUrl?: string;
+  image: string;
+}
+
+interface OtherProject {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  lang: Lang;
+  project: ProjectData;
+  otherProjects: OtherProject[];
+}
+
+const { lang, project, otherProjects } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section class="mx-auto max-w-4xl px-[8%] pt-32 pb-24">
+  <a
+    href={`${homePath(lang)}#portfolio`}
+    class="mb-8 inline-flex items-center gap-2 text-[1.4rem] text-[var(--color-muted)] transition-colors hover:text-[var(--color-primary)]"
+  >
+    <i class="bx bx-arrow-back"></i> {t('projeto.back')}
+  </a>
+
+  <span
+    class="mb-4 inline-block w-fit rounded-full border border-[var(--color-primary)] px-4 py-1 text-[1.1rem] font-semibold tracking-wide text-[var(--color-primary)] uppercase"
+  >
+    {project.badge}
+  </span>
+
+  <h1 class="mb-6 text-5xl font-bold text-[var(--color-text)]">{project.title}</h1>
+
+  <img
+    src={project.image}
+    alt={project.title}
+    class="mb-8 max-h-[420px] w-full rounded-2xl border border-[var(--color-border)] object-cover"
+  />
+
+  <p class="mb-8 text-[1.75rem] leading-relaxed text-[var(--color-muted)]">{project.description}</p>
+
+  <h2 class="mb-3 text-2xl font-semibold text-[var(--color-text)]">{t('projeto.stack')}</h2>
+  <div class="mb-10 flex flex-wrap gap-2">
+    {
+      project.stack.map((item) => (
+        <span class="rounded-full border border-[var(--color-primary)]/25 bg-[var(--color-primary)]/10 px-4 py-1.5 text-[1.35rem] font-medium text-[var(--color-text)]">
+          {item}
+        </span>
+      ))
+    }
+  </div>
+
+  {
+    project.status === 'public' && project.repoUrl ? (
+      <a
+        href={project.repoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-full border border-[var(--color-primary)] bg-[var(--color-primary)] px-8 py-3 text-[1.5rem] font-semibold text-[var(--color-bg)] transition-all hover:shadow-[0_0_2rem_var(--color-shadow)]"
+      >
+        <i class="bx bxl-github text-2xl" /> {t('projeto.repo')}
+      </a>
+    ) : (
+      <span class="inline-flex items-center gap-2 rounded-full border border-[var(--color-muted)]/40 px-6 py-3 text-[1.4rem] text-[var(--color-muted)]">
+        <i class="bx bx-lock" /> {t('projeto.private')}
+      </span>
+    )
+  }
+
+  {
+    otherProjects.length > 0 && (
+      <div class="mt-20 border-t border-[var(--color-border)] pt-10">
+        <h2 class="mb-5 text-2xl font-semibold text-[var(--color-text)]">{t('projeto.others')}</h2>
+        <div class="flex flex-wrap gap-3">
+          {otherProjects.map((p) => (
+            <a
+              href={projectPath(lang, p.slug)}
+              class="rounded-full border border-[var(--color-border)] px-5 py-2 text-[1.35rem] text-[var(--color-muted)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
+            >
+              {p.title}
+            </a>
+          ))}
+        </div>
+      </div>
+    )
+  }
+</section>

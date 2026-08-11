@@ -1,0 +1,54 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import type { Lang } from '../i18n/utils';
+
+interface ProjectEntry {
+  id: string;
+  data: {
+    title: string;
+    badge: string;
+    description: string;
+    stack: string[];
+    status: 'private' | 'public';
+    image: string;
+    order: number;
+  };
+}
+
+interface Props {
+  lang: Lang;
+  projects: ProjectEntry[];
+}
+
+const { lang, projects } = Astro.props;
+const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
+
+// Literal Tailwind classes per position, so the JIT scanner can pick them up.
+const spanClasses = [
+  'md:col-span-7', // SIAS – featured
+  'md:col-span-5', // ClickParcela
+  'md:col-span-4',
+  'md:col-span-4',
+  'md:col-span-4',
+];
+---
+
+<div class="grid grid-cols-1 gap-6 md:grid-cols-12">
+  {
+    sorted.map((project, i) => (
+      <div class={spanClasses[i] ?? 'md:col-span-4'}>
+        <ProjectCard
+          lang={lang}
+          slug={project.id}
+          title={project.data.title}
+          badge={project.data.badge}
+          description={project.data.description}
+          stack={project.data.stack}
+          status={project.data.status}
+          image={project.data.image}
+          large={i < 2}
+        />
+      </div>
+    ))
+  }
+</div>
