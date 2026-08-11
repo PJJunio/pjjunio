@@ -6,5 +6,6 @@
   "status": "public",
   "repoUrl": "https://github.com/PJJunio/piDV",
   "image": "/IMG/mscode.png",
+  "detailImage": "/IMG/pidv-dashboard.png",
   "order": 4
 }
